@@ -8,11 +8,19 @@ if __name__ == "__main__":
     
     llm = ChatOllama(model="llama3.2:latest")
     
+    mensagens = [system_prompt]
+    
     mensagem = "None"
     
     while mensagem != "xau":
         usr_msg = HumanMessage(input("\nUsuario: "))
+        
         mensagem = usr_msg.content.lower()
         
-        resposta = llm.invoke([system_prompt, usr_msg])
+        mensagens.append(usr_msg)
+        
+        resposta = llm.invoke(mensagens)
+        
         print("\nxandAi: ", resposta.content)
+        
+        mensagens.append(resposta.content)
